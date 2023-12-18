@@ -23,11 +23,11 @@ bookRouter.get("/:id", async (req, res) => {
         if (book) {
             res.status(200).send(book);
         } else {
-            res.status(404).send(`Failed to find an book: ID ${id}`);
+            res.status(404).send(`Impossible de trouver le livre: ID ${id}`);
         }
   
     } catch (error) {
-        res.status(404).send(`Failed to find an book: ID ${req?.params?.id}`);
+        res.status(404).send(`Impossible de trouver le livre: ID ${req?.params?.id}`);
     }
  });
 
@@ -38,9 +38,9 @@ bookRouter.get("/:id", async (req, res) => {
         const result = await collections.book.insertOne(book);
   
         if (result.acknowledged) {
-            res.status(201).send(`Created a new book: ID ${result.insertedId}.`);
+            res.status(201).send(`Livre crée: ID ${result.insertedId}.`);
         } else {
-            res.status(500).send("Failed to create a new book.");
+            res.status(500).send("Impossible de créer ce livre.");
         }
     } catch (error) {
         console.error(error);
@@ -58,11 +58,11 @@ bookRouter.get("/:id", async (req, res) => {
         const result = await collections.book.updateOne(query, { $set: book });
   
         if (result && result.matchedCount) {
-            res.status(200).send(`Updated an book: ID ${id}.`);
+            res.status(200).send(`Livre mis a jour: ID ${id}.`);
         } else if (!result.matchedCount) {
-            res.status(404).send(`Failed to find an book: ID ${id}`);
+            res.status(404).send(`Impossible de trouver le livre : ID ${id}`);
         } else {
-            res.status(304).send(`Failed to update an book: ID ${id}`);
+            res.status(304).send(`Impossible de mettre a jour ce livre : ID ${id}`);
         }
     } catch (error) {
         console.error(error.message);
@@ -79,11 +79,11 @@ bookRouter.get("/:id", async (req, res) => {
         const result = await collections.book.deleteOne(query);
   
         if (result && result.deletedCount) {
-            res.status(202).send(`Removed an book: ID ${id}`);
+            res.status(202).send(`Livre supprimé: ID ${id}`);
         } else if (!result) {
-            res.status(400).send(`Failed to remove an book: ID ${id}`);
+            res.status(400).send(`Impossible de supprimer ce livre: ID ${id}`);
         } else if (!result.deletedCount) {
-            res.status(404).send(`Failed to find an book: ID ${id}`);
+            res.status(404).send(`Impossible de trouver le livre: ID ${id}`);
         }
     } catch (error) {
         console.error(error.message);
